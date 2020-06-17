@@ -3,7 +3,7 @@ package com.pashcom.snake.tools
 import java.io.File
 import java.nio.file.Paths
 
-object UserData {
+object UserDataCollector {
 
   private def getLastFilesFromDir(dir: File, lastCount: Int): List[String] = {
     if (dir.exists())

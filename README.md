@@ -9,3 +9,5 @@ Only russian language
 
 or download **snake-assembly-0.1.jar**
 
+![screenshot](https://i.imgur.com/StYw1Qu.png)
+

@@ -41,7 +41,7 @@ object CustomDialog {
     if (options == null) {
       selectedValue match {
         case integer: Integer => return integer.intValue
-        case _ => return -1
+        case _                => return -1
       }
     }
 

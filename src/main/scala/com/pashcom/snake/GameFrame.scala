@@ -7,14 +7,11 @@ import com.pashcom.snake.tools.{CloseWindowOperation, DialogCollector, MediaLibr
 import javax.swing._
 
 class GameFrame extends JFrame {
-  MediaLibrary
-
   private var gameStage: GameStage = LOGO
-
   private var board: Board = _
-  private val actionListener = getGameIntroActionListener
+  private val gameIntroActionListener = getGameIntroActionListener
   private val label = new JLabel()
-  private val timer = new Timer(1500, actionListener)
+  private val timer = new Timer(1500, gameIntroActionListener)
 
   setResizable(false)
   pack()
@@ -32,7 +29,7 @@ class GameFrame extends JFrame {
   }
 
   private def startGame(): Unit = {
-    timer.removeActionListener(actionListener)
+    timer.removeActionListener(gameIntroActionListener)
 
     val snake = new Snake(240, 160, 3, RIGHT, 20)
     addKeyListener(new SnakeMoveKeyAdapter(snake))
@@ -63,10 +60,10 @@ class GameFrame extends JFrame {
           timer.start()
 
         case LOGO2 =>
-          gameStage = LOGO_TEXT2
+          gameStage = LOGO2_TEXT
           label.setIcon(MediaLibrary.introText)
 
-        case LOGO_TEXT2 =>
+        case LOGO2_TEXT =>
           gameStage = GAME_INTRO
           SoundPlayer.play(MediaLibrary.introAudio)
           label.setIcon(MediaLibrary.introGif)

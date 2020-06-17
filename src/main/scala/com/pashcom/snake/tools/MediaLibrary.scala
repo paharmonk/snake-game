@@ -11,7 +11,7 @@ object MediaLibrary {
   val headToWall: URL = getResource("head_to_wall.wav")
   val deathSound: URL = getResource("death_sound.wav")
 
-  // sprites
+  // sprite
   val blood: ImageIcon = new ImageIcon(getResource("blood.png"))
   val grass: ImageIcon = new ImageIcon(getResource("grass.png"))
   val balls: ImageIcon = new ImageIcon(getResource("balls.png"))

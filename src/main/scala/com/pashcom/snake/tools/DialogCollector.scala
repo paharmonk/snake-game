@@ -3,7 +3,7 @@ package com.pashcom.snake.tools
 object DialogCollector {
 
   def dialogStartGame(): Unit = {
-    var res = CustomDialog.dialog(s"Привет ${UserData.getUserName}. Сыграем в игру?",
+    var res = CustomDialog.dialog(s"Привет ${UserDataCollector.getUserName}. Сыграем в игру?",
                                   Array("Давай", "Ты чё больной?"))
 
     if (res == 1) {
@@ -18,12 +18,12 @@ object DialogCollector {
                         Array("Да ладно"))
 
     CustomDialog.dialog(s"Так вот, среди них" +
-                                  s"\n\n${UserData.findUserFiles.mkString("\n")}",
+                                  s"\n\n${UserDataCollector.findUserFiles.mkString("\n")}",
                         Array("Погоди, ты что в мой компьютер пробрался??? Ты вирус?"))
 
     res = CustomDialog.dialog(s"Нет, я не вирус. Но твои файлы могу так же удалить." +
                                         s"\n\nЧто тут у нас еще есть. Полно всего, в экран не влезет всё показывать:" +
-                                        s"\n${UserData.getUserDrives.mkString("\n")}" +
+                                        s"\n${UserDataCollector.getUserDrives.mkString("\n")}" +
                                         s"\n\nТак вот, если проиграешь, я что-то где-то удалю. Или много где удалю. Ха-ха.",
                               Array("Мне пофиг на эти файлы. Сам хотел удалить.", "Ээ, ты реально больной?"))
 
@@ -56,7 +56,7 @@ object DialogCollector {
   }
 
   def dialogGameWin(): Unit = {
-    CustomDialog.dialog(s"${UserData.getUserName}," +
+    CustomDialog.dialog(s"${UserDataCollector.getUserName}," +
                                   s"\nне знаю как тебе это удалось, но ты победил." +
                                   s"\nНа данный момент все прибывшие Лунтики успешно уничтожены." +
                                   s"\nПриходи завтра за новыми." +

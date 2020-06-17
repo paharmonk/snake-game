@@ -10,24 +10,24 @@ import scala.annotation.tailrec
 import scala.util.Random
 
 class Board(timer: Timer, snake: Snake) extends JPanel with ActionListener {
-  final private val B_WIDTH = 800
-  final private val B_HEIGHT = 600
-  final private val DOT_SIZE = 20
-  final private val DELAY = 90
+  private final val B_WIDTH = 800
+  private final val B_HEIGHT = 600
+  private final val DOT_SIZE = 20
+  private final val DELAY = 90
+  private final val GAME_WIN_SNAKE_LENGTH = 200
 
-  private val GAME_WIN_SNAKE_LENGTH = 200
   private var gameStatus: GameStatus = RUNNING
 
   private var luntikPosition: Point = _
   private var grassPosition: List[Point] = List.empty
   private var displayBlood: Boolean = false
 
-  private val ballImage: Image = MediaLibrary.balls.getImage
+  private val ballImage:   Image = MediaLibrary.balls.getImage
   private val luntikImage: Image = MediaLibrary.luntik.getImage
-  private val headImage: Image = MediaLibrary.vupsen.getImage
-  private val headImage2: Image = MediaLibrary.vupsenBoBo.getImage
-  private val grassImage: Image = MediaLibrary.grass.getImage
-  private val bloodImage: Image = MediaLibrary.blood.getImage
+  private val headImage:   Image = MediaLibrary.vupsen.getImage
+  private val headImage2:  Image = MediaLibrary.vupsenBoBo.getImage
+  private val grassImage:  Image = MediaLibrary.grass.getImage
+  private val bloodImage:  Image = MediaLibrary.blood.getImage
 
   initBoard()
 
@@ -57,10 +57,9 @@ class Board(timer: Timer, snake: Snake) extends JPanel with ActionListener {
 
   private def doDrawing(g: Graphics): Unit = {
     gameStatus match {
-      case RUNNING   => drawGame(g)
-      case COLLISION => drawGame(g)
-      case GAME_OVER => drawGameOver(g)
-      case _         =>
+      case RUNNING | COLLISION => drawGame(g)
+      case GAME_OVER            => drawGameOver(g)
+      case _                    =>
     }
 
     Toolkit.getDefaultToolkit.sync()
@@ -69,7 +68,7 @@ class Board(timer: Timer, snake: Snake) extends JPanel with ActionListener {
   private def drawGame(g: Graphics): Unit = {
     // рисуем лунтика
     g.drawImage(luntikImage, luntikPosition.x, luntikPosition.y, this)
-    // рисуем змейку с конца, +20 для выравниваняи картинок
+    // рисуем змейку с конца, +20 для выравнивания картинок
     snake.tail.reverseIterator.foreach(point => g.drawImage(ballImage, point.x, point.y + 20, this))
 
     // рисуем голову змейке. -3 для выравнивания картинок
