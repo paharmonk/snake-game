@@ -1,19 +1,20 @@
 package com.pashcom.snake.game
 
+import com.pashcom.snake.tools.dialogs.DialogCollector
+
 import java.awt.event.{ActionEvent, ActionListener}
 import java.awt.{Color, Dimension, Graphics, Image, Toolkit}
+import com.pashcom.snake.tools.{MediaLibrary, SoundPlayer, SystemRebooter}
 
-import com.pashcom.snake.tools.{DialogCollector, MediaLibrary, SoundPlayer, SystemRebooter}
 import javax.swing.{JPanel, Timer}
-
 import scala.annotation.tailrec
 import scala.util.Random
 
-class Board(timer: Timer, snake: Snake) extends JPanel with ActionListener {
+class Board(timer: Timer, snake: Snake, dialogCollector: DialogCollector) extends JPanel with ActionListener {
   private final val B_WIDTH = 800
   private final val B_HEIGHT = 600
   private final val DOT_SIZE = 20
-  private final val DELAY = 90
+  private final val DELAY = 110
   private final val GAME_WIN_SNAKE_LENGTH = 200
 
   private var gameStatus: GameStatus = RUNNING
@@ -58,8 +59,8 @@ class Board(timer: Timer, snake: Snake) extends JPanel with ActionListener {
   private def doDrawing(g: Graphics): Unit = {
     gameStatus match {
       case RUNNING | COLLISION => drawGame(g)
-      case GAME_OVER            => drawGameOver(g)
-      case _                    =>
+      case GAME_OVER           => drawGameOver(g)
+      case _                   =>
     }
 
     Toolkit.getDefaultToolkit.sync()
@@ -79,7 +80,7 @@ class Board(timer: Timer, snake: Snake) extends JPanel with ActionListener {
       gameStatus = GAME_OVER
     }
 
-    // рисуем кровяку, -20 для выравниваняи картинок
+    // рисуем кровяку, -20 для выравнивания картинок
     if (displayBlood) {
       g.drawImage(bloodImage, snake.head.x - 20, snake.head.y - 20, this)
     }
@@ -91,7 +92,7 @@ class Board(timer: Timer, snake: Snake) extends JPanel with ActionListener {
   private def drawGameOver(g: Graphics): Unit = {
     timer.stop()
 
-    DialogCollector.dialogGameOver()
+    dialogCollector.dialogGameOver()
     SystemRebooter.reboot()
     System.exit(0)
   }
@@ -99,7 +100,7 @@ class Board(timer: Timer, snake: Snake) extends JPanel with ActionListener {
   private def checkLuntik(): Unit = {
     val head = snake.head
 
-    if (head == luntikPosition || head.intersects(luntikPosition, DOT_SIZE * 2)) {
+    if (head == luntikPosition || head.isIntersect(luntikPosition, DOT_SIZE * 2)) {
       snake.addTail()
       displayBlood = true
       SoundPlayer.play(MediaLibrary.deathSound)
@@ -121,7 +122,7 @@ class Board(timer: Timer, snake: Snake) extends JPanel with ActionListener {
 
     // победа
     if (snake.tail.length == GAME_WIN_SNAKE_LENGTH && !displayBlood) {
-      DialogCollector.dialogGameWin()
+      dialogCollector.dialogGameWin()
       System.exit(0)
     }
   }
@@ -147,7 +148,7 @@ class Board(timer: Timer, snake: Snake) extends JPanel with ActionListener {
   @tailrec
   private def randomPoint: Point = {
     def getRandomCoord(bound: Int): Int = new Random().nextInt(bound)
-    def check(p: Point, p2: Point): Boolean = p == p2 || p.intersects(p2, DOT_SIZE * 2)
+    def check(p: Point, p2: Point): Boolean = p == p2 || p.isIntersect(p2, DOT_SIZE * 2)
 
     val point = Point(getRandomCoord(B_WIDTH - 118), getRandomCoord(B_HEIGHT - 150))
     if (!check(snake.head, point) && !snake.tail.forall(x => check(x, point)))

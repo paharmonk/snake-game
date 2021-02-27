@@ -1,12 +1,14 @@
 package com.pashcom.snake
 
-import java.awt.event.{ActionEvent, ActionListener}
-
 import com.pashcom.snake.game.{Board, RIGHT, Snake, SnakeMoveKeyAdapter}
-import com.pashcom.snake.tools.{CloseWindowOperation, DialogCollector, MediaLibrary, SoundPlayer}
+import com.pashcom.snake.tools.dialogs.DialogCollector
+import com.pashcom.snake.tools.{CloseWindowOperation, MediaLibrary, SoundPlayer}
+
+import java.awt.event.{ActionEvent, ActionListener}
 import javax.swing._
 
 class GameFrame extends JFrame {
+  private val dialogCollector: DialogCollector = DialogCollector.getDialogCollector
   private var gameStage: GameStage = LOGO
   private var board: Board = _
   private val gameIntroActionListener = getGameIntroActionListener
@@ -34,7 +36,7 @@ class GameFrame extends JFrame {
     val snake = new Snake(240, 160, 3, RIGHT, 20)
     addKeyListener(new SnakeMoveKeyAdapter(snake))
 
-    board = new Board(timer, snake)
+    board = new Board(timer, snake, dialogCollector)
     board.startGame()
 
     add(board)
@@ -53,7 +55,7 @@ class GameFrame extends JFrame {
 
         case INTRO =>
           timer.stop()
-          DialogCollector.dialogStartGame()
+          dialogCollector.dialogStartGame()
           CloseWindowOperation.setRebootOnCLose(this)
           label.setIcon(MediaLibrary.pashcomLogo)
           gameStage = LOGO2

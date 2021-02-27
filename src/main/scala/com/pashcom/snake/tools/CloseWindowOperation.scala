@@ -1,7 +1,8 @@
 package com.pashcom.snake.tools
 
-import java.awt.event.{WindowAdapter, WindowEvent}
+import com.pashcom.snake.tools.dialogs.CustomDialog
 
+import java.awt.event.{WindowAdapter, WindowEvent}
 import javax.swing.JFrame
 
 object CloseWindowOperation {

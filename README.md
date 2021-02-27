@@ -1,7 +1,6 @@
 # Gui swing snake game
 
 ## Info
-Only russian language
 
 #### Assembly and run
 * sbt assembly

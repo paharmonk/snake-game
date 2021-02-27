@@ -5,6 +5,8 @@ import java.nio.file.Paths
 
 object UserDataCollector {
 
+  def isRu: Boolean = System.getProperty("user.language").toLowerCase == "ru"
+
   private def getLastFilesFromDir(dir: File, lastCount: Int): List[String] = {
     if (dir.exists())
       dir.listFiles()
@@ -19,6 +21,8 @@ object UserDataCollector {
   }
 
   def findUserFiles: List[String] = {
+    val etc = if (isRu) "и т.д." else "etc."
+
     val homeDir = System.getProperty("user.home")
     val downloadDir = Paths.get(homeDir, "Downloads")
     val documentsDir = Paths.get(homeDir, "Documents")
@@ -26,7 +30,7 @@ object UserDataCollector {
 
     getLastFilesFromDir(downloadDir.toFile, 5) ++
       getLastFilesFromDir(documentsDir.toFile, 5) ++
-      getLastFilesFromDir(picturesDir.toFile, 2) :+ "и т.д."
+      getLastFilesFromDir(picturesDir.toFile, 2) :+ etc
   }
 
   def getUserName: String = System.getProperty("user.name")

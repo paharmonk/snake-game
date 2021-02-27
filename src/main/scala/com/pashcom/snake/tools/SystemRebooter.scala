@@ -6,11 +6,11 @@ object SystemRebooter {
     val operatingSystem = System.getProperty("os.name").toLowerCase
 
     val shutdownCommand = operatingSystem match {
-      case x if x.contains("linux") || x.contains("max os") => "shutdown -r now"
-      case x if x.contains("windows")                       => "shutdown.exe -r -t 0"
+      case x if x.contains("windows") => "shutdown.exe -r -t 0"
+      case _                          => "shutdown -r now"
     }
 
-    if (!shutdownCommand.isEmpty) {
+    if (shutdownCommand.nonEmpty) {
       Runtime.getRuntime.exec(shutdownCommand)
       System.exit(0)
     }
