@@ -4,6 +4,7 @@ import com.pashcom.snake.tools.UserDataCollector
 
 trait DialogCollector {
   def dialogStartGame()
+  def dialogHowToPlay()
   def dialogGameOver()
   def dialogGameWin()
 }

@@ -20,7 +20,7 @@ class GameFrame extends JFrame {
   setTitle("Snake")
   setSize(800, 600)
   setLocationRelativeTo(null)
-  setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE)
+  setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE)
 
   startIntro()
 
@@ -37,9 +37,8 @@ class GameFrame extends JFrame {
     addKeyListener(new SnakeMoveKeyAdapter(snake))
 
     board = new Board(timer, snake, dialogCollector)
-    board.startGame()
-
     add(board)
+    board.startGame()
   }
 
   private def getGameIntroActionListener: ActionListener = {
@@ -67,8 +66,8 @@ class GameFrame extends JFrame {
 
         case LOGO2_TEXT =>
           gameStage = GAME_INTRO
-          SoundPlayer.play(MediaLibrary.introAudio)
           label.setIcon(MediaLibrary.introGif)
+          SoundPlayer.play(MediaLibrary.introAudio)
           timer.setDelay(6030)  // время introGif
 
         case GAME_INTRO =>

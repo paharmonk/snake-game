@@ -48,6 +48,7 @@ class Board(timer: Timer, snake: Snake, dialogCollector: DialogCollector) extend
 
   def startGame(): Unit = {
     timer.setDelay(DELAY)
+    dialogCollector.dialogHowToPlay()
     timer.addActionListener(this)
   }
 

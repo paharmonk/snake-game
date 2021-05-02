@@ -2,6 +2,8 @@ package com.pashcom.snake.tools.dialogs
 
 import com.pashcom.snake.tools.UserDataCollector
 
+import scala.annotation.tailrec
+
 object DialogCollectorRU extends DialogCollector {
 
   def dialogStartGame(): Unit = {
@@ -64,5 +66,17 @@ object DialogCollectorRU extends DialogCollector {
       s"\nПриходи завтра за новыми." +
       s"\n\nПоздравляю. Ты крутой. Можешь всем теперь похвастаться.",
       Array("Выход"))
+  }
+
+  override def dialogHowToPlay(): Unit = {
+    @tailrec
+    def showDialog(extraText: String): Unit = {
+      val res = CustomDialog.dialog(s"$extraText\nИспользуй стрелки на клавиатуре, чтобы управлять змейкой.",
+        Array("Ок", "Я не понял"))
+
+      if (res == 1) showDialog("Ну давай еще раз объясню.")
+    }
+
+    showDialog("")
   }
 }
